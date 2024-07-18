@@ -24,17 +24,17 @@ def producto_calcular_rentabilidad(precio: int, lista_ingredientes: list[dict]) 
     return precio - producto_calcular_costo(lista_ingredientes)
 
 # Calcula el producto más rentable de una lista de productos que recibe como parámetro
-def producto_calcular_mas_rentable(lista_productos: list[dict]) -> str:
+def producto_calcular_mas_rentable(lista_productos: list[dict]) -> (str, float):
     mayor_rentabilidad = 0
     producto_mas_rentable = ""
     for producto in lista_productos:
-        if isinstance(producto.get("rentabilidad"), int):
+        if isinstance(producto.get("rentabilidad"), float):
             if producto.get("rentabilidad") >= mayor_rentabilidad:
-                mayor_rentabilidad = int(producto.get("rentabilidad"))
+                mayor_rentabilidad = float(producto.get("rentabilidad"))
                 producto_mas_rentable = str(producto.get("nombre"))
         else:
-            print("La rentabilidad del producto {} no es de tipo int".format(producto.get("nombre")))  
-    return producto_mas_rentable
+            print("La rentabilidad del producto {} no es de tipo float".format(producto.get("nombre")))  
+    return (producto_mas_rentable, mayor_rentabilidad)
 
 def imprimir(mensaje: str, color: str):
     colores = {

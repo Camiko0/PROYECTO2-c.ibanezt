@@ -1,3 +1,4 @@
+#Variable global y sus metodos para actualizar y consultar
 ventas_del_dia = 0
 
 def reset_ventas_del_dia() -> None:

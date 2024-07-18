@@ -23,7 +23,7 @@ class Ingrediente(db.Model):
 
     productos = db.relationship('Producto', secondary='productos_ingredientes')
 
-    # Otros metodos
+    # Calcular si es sano
     def es_sano(self) -> bool:
         return utils.funciones.ingrediente_es_sano(self._calorias, self._es_vegetariano)
     

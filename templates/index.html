@@ -86,6 +86,18 @@
             <button class="button">Reiniciar pedidos del día</button>
         </a>
 
+        <a href="/producto-mas-rentable">
+            <button class="button">Calcular el producto más rentable</button>
+        </a>
+
+        <div>
+            {% if producto != null %}
+              <div class="alert alert-danger" id="alerta">
+                <h3><strong>¡Atención!</strong> El producto más rentable es <strong>{{ producto[0] }}</strong> con rentabilidad de {{ producto[1] }}</h3>
+              </div>
+            {% endif %}
+        </div>
+
         <div class="card-container">
             <div class="card">
                 <h2>Productos vendidos hoy {{ ventas }}</h2>

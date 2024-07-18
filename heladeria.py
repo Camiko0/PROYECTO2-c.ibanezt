@@ -1,6 +1,4 @@
 import utils.funciones
-#from base import Base
-#from complemento import Complemento
 
 from models.models_bd import Producto
 from models.models_bd import Ingrediente
@@ -13,26 +11,27 @@ class Heladeria():
         self.__ingredientes = Ingrediente.query.all()
         self.__ventas_del_dia = 0
 
-    # Otros metodos
-    def calcular_producto_mas_rentable(self) -> str:
+    #Calcular el producto mas rentable de la heladeria
+    def calcular_producto_mas_rentable(self) -> (str, float):
         # Llama los metodos producto_calcular_costo, producto_calcular_rentabilidad y producto_calcular_mas_rentable de utils.funciones
         lista_productos  = []
         for producto in self.__productos:
             utils.funciones.imprimir("Producto: {}".format(producto.nombre), "amarillo")
             lista_ingredientes = []
-            for ingrediente in producto.obtener_ingredientes():
+            for ingrediente in producto.ingredientes:
                 lista_ingredientes.append({"nombre": ingrediente.nombre, "precio": ingrediente.precio})
             utils.funciones.imprimir("-- Listado de ingredientes: {} ".format(lista_ingredientes), "verde")
             # Calcular costo
             utils.funciones.imprimir("-- El costo de producir el producto es: {}".format(utils.funciones.producto_calcular_costo(lista_ingredientes)), "azul")
             # Calcular rentabilidad
-            rentabilidad = utils.funciones.producto_calcular_rentabilidad(ingrediente.precio_publico, lista_ingredientes)
+            rentabilidad = utils.funciones.producto_calcular_rentabilidad(ingrediente.precio, lista_ingredientes)
             print("-- El rentabilidad del producto es: {}".format(rentabilidad))
-            lista_productos.append({"nombre": producto.obtener_nombre(), "rentabilidad": rentabilidad})
+            lista_productos.append({"nombre": producto.nombre, "rentabilidad": rentabilidad})
         # Calcular producto más rentable
         utils.funciones.imprimir("-- Listado de productos: {} ".format(lista_productos), "magenta")
         return utils.funciones.producto_calcular_mas_rentable(lista_productos)
     
+    #Vender un producto si tiene todos sus ingredientes
     def vender(self, nombre_producto: str) -> bool:
         producto_existe = False
         producto_vender = ""
@@ -48,6 +47,7 @@ class Heladeria():
             utils.funciones.imprimir("-- El producto '{}' existe dentro de los productos de la heladeria".format(nombre_producto), "amarillo")
             # Validar uno a uno los ingredientes
             ingredientes_existentes = True
+            ingrediente_sin_inventario = list()
             for ingrediente in producto_vender.ingredientes:
                 # Si es Base necesita 0.2
                 if ingrediente.tipo_ingrediente.upper() == Ingrediente_Enum.BASE.name:
@@ -55,6 +55,7 @@ class Heladeria():
                         ingrediente.nombre, ingrediente.inventario))
                     # Si un ingrediente no tiene existencia romper el bucle (En tal caso no se puede crear el producto)
                     if (ingrediente.inventario - 0.2) < 0:
+                        ingrediente_sin_inventario.append(ingrediente.nombre)
                         ingredientes_existentes = False
                 # Si es Complemento necesita 1
                 elif ingrediente.tipo_ingrediente.upper() == Ingrediente_Enum.COMPLEMENTO.name:
@@ -62,6 +63,7 @@ class Heladeria():
                         ingrediente.nombre, ingrediente.inventario))
                     # Si un ingrediente no tiene existencia romper el bucle (En tal caso no se puede crear el producto)
                     if (ingrediente.inventario - 1) < 0:
+                        ingrediente_sin_inventario.append(ingrediente.nombre)
                         ingredientes_existentes = False
             
             # Restar existencias de los ingredientes en el inventario para crear el producto
@@ -81,8 +83,13 @@ class Heladeria():
                 utils.funciones.imprimir(">>>> El numero de ventas de hoy son: {}".format(self.__ventas_del_dia), "verde")
                 return True
             else:
-                utils.funciones.imprimir("-- El producto '{}' no tiene los ingredientes necesarios para fabricarlo".format(nombre_producto), "rojo")
-                return False
+                #ValueError con los ingredientes faltantes
+                response = "¡Oh no! Nos hemos quedado sin los ingredientes: "
+                for nombre in ingrediente_sin_inventario:
+                    response += nombre + " "
+                raise ValueError(response)
+                #utils.funciones.imprimir("-- El producto '{}' no tiene los ingredientes necesarios para fabricarlo".format(nombre_producto), "rojo")
+                #return False
         else:
             utils.funciones.imprimir("-- El producto '{}' no existe dentro de los productos de la heladeria".format(nombre_producto), "rojo")
             return False

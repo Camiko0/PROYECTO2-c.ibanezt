@@ -78,9 +78,13 @@
         </a>
 
         {% if vendido %}
-            <p>El producto {{ producto }} fue vendido, se suma a los productos vendidos.</p>
+            <p>El producto {{ producto }} fue vendido, se suma a las ventas del dia.</p>
+            <br/>
+            <strong>¡Vendido!</strong>
         {% else %}
-            <p>El producto {{ producto }} no fue vendido, no tiene los ingredientes necesarios para fabricarlo.</p>
+            <p>El producto {{ producto }} no fue vendido</p>
+            <br/>
+            <strong>{{ response }}</strong>
         {% endif %}
 
         <div class="card-container">

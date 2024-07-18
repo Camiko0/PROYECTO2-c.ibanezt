@@ -80,6 +80,14 @@
     </style>
 </head>
 <body>
+    <div class="container">
+        {% if renovar %}
+          <div class="alert alert-danger" id="alerta">
+            <h3><strong>¡Atención!</strong> Se ha reabastecido el producto <strong>{{ ingrediente_abastecer }}</strong></h3>
+          </div>
+        {% endif %}
+    </div>
+
     <div class="card-container">
         <div class="card">
             <h2>Productos vendidos hoy {{ ventas }}</h2>
@@ -121,6 +129,12 @@
                         <a href="/abastecer?ingrediente={{ ingrediente.nombre }}">
                             <button class="button">Abastecer</button>
                         </a>
+                        <br/>
+                        {% if ingrediente.tipo_ingrediente == "Complemento" %}
+                            <a href="/abastecer?ingrediente={{ ingrediente.nombre }}&renovar=True">
+                                <button class="button">Renovar</button>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
