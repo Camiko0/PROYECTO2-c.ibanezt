@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenido</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        h1 {
+            color: black;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #3e8e41; /* Darker green */
+        }
+
+        /* Card container styles */
+        .card-container {
+            display: flex;
+            justify-content: flex-center; /* Align cards to the center */
+            margin: 20px 0; /* Add margin above and below the cards */
+        }
+
+        /* Card styles */
+        .card {
+            width: 300px; /* Adjust width as needed */
+            background-color: white;
+            box-shadow: 0 3px 5px #3e8e41;
+            padding: 20px;
+            margin: 0 10px; /* Add margin between cards */
+        }
+
+        .card h2 {
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vender productos</h1>
+
+        <a href="/productos">
+            <button class="button">Regresar</button>
+        </a>
+
+        {% if vendido %}
+            <p>El producto {{ producto }} fue vendido, se suma a los productos vendidos.</p>
+        {% else %}
+            <p>El producto {{ producto }} no fue vendido, no tiene los ingredientes necesarios para fabricarlo.</p>
+        {% endif %}
+
+        <div class="card-container">
+            <div class="card">
+                <h2>Productos vendidos hoy {{ ventas }}</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

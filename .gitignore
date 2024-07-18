@@ -1,0 +1,4 @@
+# Archivos generados por flask y librerias
+include/
+Lib/
+Scripts/

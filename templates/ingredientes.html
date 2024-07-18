@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helader+ia - Ingredientes</title>
+    <style>
+        /* Basic table styles */
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: black;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #3e8e41; /* Darker green */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Card container styles */
+        .card-container {
+            display: flex;
+            justify-content: flex-end; /* Align cards to the right */
+            margin: 20px 0; /* Add margin above and below the cards */
+        }
+
+        /* Card styles */
+        .card {
+            width: 300px; /* Adjust width as needed */
+            background-color: white;
+            box-shadow: 0 3px 5px #3e8e41;
+            padding: 20px;
+            margin: 0 10px; /* Add margin between cards */
+        }
+
+        .card h2 {
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card">
+            <h2>Productos vendidos hoy {{ ventas }}</h2>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Ingredientes de la heladería</h1>
+
+        <a href="/">
+            <button class="button">Regresar</button>
+        </a>
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Precio</th>
+                    <th>Calorías</th>
+                    <th>Nombre</th>
+                    <th>Inventario</th>
+                    <th>¿Es vegetariano?</th>
+                    <th>Tipo de ingrediente</th>
+                    <th>Sabor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ingrediente in ingredientes %}
+                <tr>
+                    <td>{{ ingrediente.id }}</td>
+                    <td>{{ ingrediente.precio }}</td>
+                    <td>{{ ingrediente.calorias }}</td>
+                    <td>{{ ingrediente.nombre }}</td>
+                    <td>{{ ingrediente.inventario }}</td>
+                    <td>{{ ingrediente.es_vegetariano }}</td>
+                    <td>{{ ingrediente.tipo_ingrediente }}</td>
+                    <td>{{ ingrediente.sabor }}</td>
+                    <td>
+                        <a href="/abastecer?ingrediente={{ ingrediente.nombre }}">
+                            <button class="button">Abastecer</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

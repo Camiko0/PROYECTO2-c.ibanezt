@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helader+ia - Productos</title>
+
+    <style>
+        /* Basic table styles */
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: black;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #3e8e41; /* Darker green */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Card container styles */
+        .card-container {
+            display: flex;
+            justify-content: flex-end; /* Align cards to the right */
+            margin: 20px 0; /* Add margin above and below the cards */
+        }
+
+        /* Card styles */
+        .card {
+            width: 300px; /* Adjust width as needed */
+            background-color: white;
+            box-shadow: 0 3px 5px #3e8e41;
+            padding: 20px;
+            margin: 0 10px; /* Add margin between cards */
+        }
+
+        .card h2 {
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card">
+            <h2>Productos vendidos hoy {{ ventas }}</h2>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Productos de la Heladería con sus Ingredientes</h1>
+
+        <a href="/">
+            <button class="button">Regresar</button>
+        </a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Tipo de producto</th>
+                    <th>Volumen</th>
+                    <th>Tipo de vaso</th>
+                    <th>Calorías</th>
+                    <th>Ingredientes</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.precio_publico }}</td>
+                    <td>{{ producto.tipo_producto }}</td>
+                    <td>{{ producto.volumen }}</td>
+                    <td>{{ producto.tipo_vaso }}</td>
+                    <td>{{ producto.calorias }}</td>
+                    <td>
+                        <ul>
+                            {% for ingrediente in producto.ingredientes %}
+                            <li>{{ ingrediente.nombre }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <a href="/heladeria/vender?producto={{ producto.nombre }}">
+                            <button class="button">Vender</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
