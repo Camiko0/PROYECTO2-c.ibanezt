@@ -25,7 +25,7 @@ class Ingrediente(db.Model):
 
     # Calcular si es sano
     def es_sano(self) -> bool:
-        return utils.funciones.ingrediente_es_sano(self._calorias, self._es_vegetariano)
+        return utils.funciones.ingrediente_es_sano(self.calorias, self.es_vegetariano)
     
     #Abastecer de acuerdo al tipo de ingrediente
     def abastecer(self) -> None:
